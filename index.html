@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Static Template</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <h1
+      style="
+        text-align: center;
+        margin-bottom: 40px;
+        color: red;
+        font-style: italic;
+      "
+    >
+      Guild line to create a cat list
+    </h1>
+    <div class="form-create">
+      <span>
+        Name:
+      </span>
+      <input type="text" id="name-f" placeholder="Enter name..." />
+      <span>
+        Color:
+      </span>
+      <!-- <img src="./assets/images/cat1.jpg" alt="" /> -->
+      <input type="text" id="color-f" placeholder="Enter color:..." />
+      <span>
+        Description:
+      </span>
+      <input type="text" id="description-f" placeholder="Enter desciprion" />
+      <button id="submit" onclick="handleSubmit()">submit</button>
+    </div>
+    <!-- Place to regenerate item -->
+    <div id="list-item"></div>
+    <script>
+      let catList = [];
+      const imagePaths = [
+        "./assets/images/cat1.jpg",
+        "./assets/images/cat2.jpg",
+        "./assets/images/cat3.jpeg",
+        "./assets/images/cat4.jpg"
+      ];
+      const nameField = document.getElementById("name-f");
+      const colorField = document.getElementById("color-f");
+      const descriptionField = document.getElementById("description-f");
+      const submitField = document.getElementById("submit");
+      const catListField = document.getElementById("list-item");
+
+      const handleSubmit = () => {
+        const nameValue = nameField.value;
+        const colorValue = colorField.value;
+        const descriptionValue = descriptionField.value;
+
+        const newObject = {
+          name: nameValue,
+          color: colorValue,
+          description: descriptionValue
+        };
+
+        catList = [...catList, newObject];
+        catListField.innerHTML = "";
+        catList.forEach((item) => {
+          const newItemElement = document.createElement("div");
+          newItemElement.classList.add("cat-item");
+          newItemElement.style.width = "100px";
+          // Image Content
+          var imageContent = document.createElement("img");
+          var randomIndex = Math.floor(Math.random() * imagePaths.length);
+          var randomImagePath = imagePaths[randomIndex];
+          imageContent.src = randomImagePath;
+          imageContent.alt = "Sub Content";
+          imageContent.style.width = "100%";
+          // Name Content
+          const nameContent = document.createElement("p");
+          nameContent.textContent = item.name;
+          nameContent.style.textAlign = "center";
+          nameContent.style.fontWeight = "bold";
+          // Color Content
+          const colorContent = document.createElement("div");
+          colorContent.style.backgroundColor = item.color;
+          colorContent.style.height = "20px";
+          // Description Content
+          const descriptionContent = document.createElement("span");
+          descriptionContent.textContent = item.description;
+          descriptionContent.style.textAlign = "center";
+          newItemElement.appendChild(imageContent);
+          newItemElement.appendChild(colorContent);
+          newItemElement.appendChild(nameContent);
+          newItemElement.appendChild(descriptionContent);
+          catListField.appendChild(newItemElement);
+        });
+      };
+    </script>
+  </body>
+</html>
